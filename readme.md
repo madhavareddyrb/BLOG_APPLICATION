@@ -19,6 +19,7 @@ path(' ' , views.home, name = 'home")
 create views.py file
 
 create a function home
+### Basic View function (view Function always take request)
 
 def home(request)
 
@@ -31,7 +32,7 @@ design home page:
 
 bootstrap--select blog layouy
 
-#### Static files Configuration:
+## Static files Configuration:
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR /'static'
@@ -43,3 +44,5 @@ STATICFILES_DIRS = [
 in templates {% load static %}
 
 link css using template tag (process) {% static 'css/blog.css' %}
+
+
