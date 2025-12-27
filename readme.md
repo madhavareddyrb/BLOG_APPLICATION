@@ -127,3 +127,82 @@ for category we can't put foreign key like that so we need to make category__cat
 for status also we had named o,1 so change that to draft and published and change integerfield to charField
 
 list_editable = ('is_featured',)
+
+add some examples of blogs and categories
+
+### Fetch Categories In HOme Page:
+
+in home view -> categories = Category.objects.all() and import category model and use context and pass to home.html
+
+categories = Category.objects.all()
+context = {
+  'categories': categories,
+}
+
+return render(request, 'home.html', context)
+
+in home.html 
+
+cretae a for loop --> {% for cat in categories %}
+ <a> {{ cat }} </a> "here cat will return catogey name because Category model has representaion with __str__ and for other field we must use cat.updated_at"
+
+{%  endfor %}
+
+
+### Display Featured Posts On The HomePage:
+
+again in home view
+
+featured_posts = BLog.objects.filter(is_featured = True,status='Published') . order_by('updated_at')
+
+pass this featured_posts to context
+
+we use for loop in template to grab all featured posts
+
+{% for post in featured_posts %}
+
+
+{% endfor %}
+
+when we try this we will get all featured_posts one by one but it don't look good we use if condition to one feature_post 
+
+{% if forloop.first %}
+
+it will loop only first featured_post not all
+
+ {%endif%}
+
+ and make changes of all title, things
+
+ for remaining featured posts create a sub heading and create normal like posts seeeing on up
+
+ same code like above 
+
+ for date we use post.createdt_at and for timesince like 1 hour ago like that we use | it acts has a filter --> {{ post.created_at | timesince }} ago
+
+ again add if condition for not repeating first one 
+
+ {% if not forloop.fist %}
+
+ {% endif %}
+
+ change featured post image 
+
+ {{post.featured_image.url}} --> dynamic url
+
+
+ ### Display Remaing post which are not featured post
+
+ same process repeat it with featured_post == False and status condition == 'Published"
+
+ for short_description use filter | turncatewords:25
+
+ to reduce short descrption words to stay consistency page
+
+
+ ### Foreign Key RelationShips: (many to one relation)
+
+ ids connection
+
+
+
