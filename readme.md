@@ -258,4 +258,77 @@ def posts_by_category(request, category_id):
 
   design posts_by_category.html
 
- 
+ ### 404 custome error page:
+
+ create 404.html template and create with any error with  number
+
+ create a p tag with the category does't work and  in settings set debug= False and allowed_host= '*'
+
+change settings to back
+
+### Template Inheritance:To Avoid Same Structure of Html
+
+The Common html contect like  heading,footer,navbar, links for every page and to avoid the same copy or html structure we can avoid the same code for everypage by using template inheritance 
+
+
+create a template base.html and a html file containes header,main,footer here header and footer  are same content for every page
+
+copy and paste header and footer in base and for main part we use blocks
+
+{% block content %}
+
+{% endblock %}
+
+we use extend to base.html to work
+
+{% extends 'base.html' %} --To use base.html structure in other templates
+
+{% block content %}
+
+Main Content Goes Here the all html structures
+
+{% endblock %}
+
+### Context Process:
+
+We pass context dictionary to only specific html file in views by storing like a dictionary but we can use context process here which works well and don't need to repeat same line of code and It takes as a request like url and pass dictionary
+
+make an module in app like views.py,urls.py with context_processors.py the spelling should be correct
+
+create a function
+
+def get_categories(request):
+  categories = Category.objects.all()
+  return dict(categories = categories)
+
+to work this function we need to configure some settings --> templates --> context_processors --> add path 
+
+"appname.context_processors.function name"
+
+the navbar with categories will show on every page now
+
+### Linking Posts by Category Url :
+
+in nav of base.html for a tag where categories have use href =' {% url 'posts_by_categoy' cat.id %}'
+
+### Single Blog Page Setup: a Blog on full page with full details:
+
+1.First : Urls -> path('<slug:slug>', views.)
+
+import views from blogs app --> from blogs import views as blogviews --> path("<slug:slug>", blogviews.blogs, name ="blogs"),
+
+in app level views define view
+
+def blogs(request, slug):
+  return render(request, 'blog.html')
+
+extends base.html
+
+in home for read more tag add href to 'blogs' post.slug 
+
+and when we click on read more or continue reading the view function gets request and data so we can get that to blogs in views to featch blog
+
+single_blog = get_object_or_404(Blog, slug=slug, status = 'published')
+
+context = { ' single_blog': single_blog}
+
