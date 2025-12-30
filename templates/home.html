@@ -9,7 +9,7 @@
     <div class="col-md-8 px-0">
       <h1 class="display-4 font-italic">{{ featured_post.title }}</h1>
       <p class="lead my-3">{{featured_post.short_description | truncatewords:25}}</p>
-      <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+      <p class="lead mb-0"><a href="{% url 'single_blog' featured_post.slug %}" class="text-white font-weight-bold">Continue reading...</a></p>
     </div>
   </div>
   {% endif %}
@@ -23,7 +23,7 @@
     <div class="col-md-6">
       <div class="card border-0" >
         <div class="card-body">
-          <h3>{{f_posts.title}}</h3>
+          <h3> <a href="{% url 'single_blog' f_posts.slug %}" class="text-dark">{{f_posts.title}}</a></h3>
           <small class="mb-1 text-muted">{{f_posts.created_at | timesince }} ago | {{f_posts.author}} </small>
           <p class="card-text">{{ f_posts.short_description | truncatewords:25}} </p>
         </div>
@@ -41,7 +41,7 @@
       <div class="col-md-8 blog-main">
 
         <div class="blog-post">
-          <h5 class="blog-post-title">{{post.title}}</h5>
+          <h5><a href="{% url 'single_blog' post.slug %}" class="text-dark">{{post.title}}</a></h5>
           <p class="blog-post-meta">{{post.created_at | timesince }} ago <a href="#">{{post.author}}</a></p>
 
           <p>{{post.short_description | truncatewords:25}}</p>

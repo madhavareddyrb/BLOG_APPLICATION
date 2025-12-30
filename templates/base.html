@@ -29,7 +29,7 @@
         <nav class="nav d-flex justify-content-between">
           {% for category in categories %}
           
-          <a class="p-2 text-muted" href="#">{{category}}</a>
+          <a class="p-2 text-muted" href="{% url 'blogs_by_category' category.pk %}">{{category}}</a>
           {% endfor %}
         </nav>
       </div>

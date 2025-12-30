@@ -315,7 +315,7 @@ in nav of base.html for a tag where categories have use href =' {% url 'posts_by
 
 1.First : Urls -> path('<slug:slug>', views.)
 
-import views from blogs app --> from blogs import views as blogviews --> path("<slug:slug>", blogviews.blogs, name ="blogs"),
+import views from blogs app --> from blogs import views as BlogViews --> path("<slug:slug>", BlogViews.blogs, name ="blogs"),
 
 in app level views define view
 

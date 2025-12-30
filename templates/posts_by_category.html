@@ -1,22 +1,27 @@
 {% extends 'base.html' %}
     
 {% block content %}
+{% if blog_category %}
 
-<h3 style="color: blue; font-size: 30px;">Sub Featured Posts</h3>
+<h3 class="text-uppercase text-warning" style="letter-spacing: 2px;">Category -</h3>
 
 <div class="row mb-2">
-    {% for blog_cate in blog_category %}
+  {% for blog_cate in blog_category %}
     
     <div class="col-md-6">
       <div class="card border-0" >
         <div class="card-body">
-          <h3>{{blog_cate.title}}</h3>
+          <h3><a href="{% url 'single_blog' blog_cate.slug %}" class="text-dark">{{blog_cate.title}}</a></h3>
           <small class="mb-1 text-muted">{{blog_cate.created_at | timesince }} ago | {{blog_cate.author}} </small>
           <p class="card-text">{{ blog_cate.short_description | truncatewords:25}} </p>
         </div>
       </div>
     </div>
     {% endfor %}
+    {% else %}
+    <p>No Posts Found </p>
+
+    {% endif %}
   </div>
 
   {% endblock %}
