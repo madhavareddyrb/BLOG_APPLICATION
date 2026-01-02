@@ -332,3 +332,26 @@ single_blog = get_object_or_404(Blog, slug=slug, status = 'published')
 
 context = { ' single_blog': single_blog}
 
+### ABout PAGE:
+
+create app and 
+
+try:
+    about = About.objects.get()
+  except:
+    about = "none"
+
+Here try block only works for get method and when we add 2 abouts or or filter,all methods won't work and after adding one data disable the add about button again by overiding model admin
+
+class AboutAdmin(admin.ModelAdmin):
+  
+  def has_add_permission(self,request):
+
+    count = About.objects.all().count()
+
+    if count == 0:
+
+      return True
+
+    return False
+
