@@ -355,3 +355,41 @@ class AboutAdmin(admin.ModelAdmin):
 
     return False
 
+### Search Filter:
+
+in base.html header 
+
+create a div with specific cols and add div for input_group and form action to get
+
+we getting search function first(method ="get") and later we submit so here Method is get(first)
+
+for action we create a url to submit data
+
+
+path ("blogs/search/", BlogsView.search , name ="search")
+
+view is going to be in app level
+
+def search(request):
+  return render(request, 'search.html')
+
+create search template:
+
+Write Logic First to featch blogs by search terms:
+
+def search(request):
+  keyword = request.GET.get('keyword') ## This keyword comes from input search we have mention that name = 'keyword' in input search bar(check html )
+
+  blogs  = Blogs.objects.filter(title_icontains=keyword) ## here i(works for casesentive upper or lower anything) and contains(if the keyword has in title)
+  
+  blogs = Blog.objects.filter(title__icontains = keyword , status = "published") (here we have using comma means and condition(both must be true) but we need to use or to search in short description or body blog)
+
+  now we have problem in search we can't fetch for short description,body search to overcome we have a Q(from db.models import first)
+
+from django.db.models import Q -- now we will see how to use
+
+  blogs = Blog.objects.filter(Q(title_icontains = keyword) | Q(short_description__icontains = keyword) | Q(blog_body__icontains = keyword), status = "published" )
+
+  we pass conntext to search template
+
+  
