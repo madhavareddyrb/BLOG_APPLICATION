@@ -392,4 +392,31 @@ from django.db.models import Q -- now we will see how to use
 
   we pass conntext to search template
 
-  
+use posts_by_category template fro frontend and keep value = {{keyword}} in input tag to see which term we have searched to display
+
+
+### Registration SetUp:
+
+create url for register a user and create view with render register.html 
+
+by using model form we are going use existed forms by django and cretae a forms.py file in to in project level not app
+
+use django default user model from django.contrib.auth.models import user 
+
+class RegistrationForm(CreateUserForm):
+
+import CreateUserForm from django.contrib.auth.forms UserCreateForm
+
+and inside that create class Meta:
+
+    model = User
+    fileds = ("email", 'username', 'password1', 'password2') ## password1(password) and password2(confrim password)
+
+import this form to views and start and pass context to register.html
+
+Install django cripsy form using documentation and bootstrap4 cripsy form and make sure to configure settings
+
+load crispy_forms_tags in register template and use like or {{ form | crispy }} thats it
+
+Now The Form is Loading with action register and when we click on submit the data is going to save in request.POST method so if the request.method == POST we get data we validate the form data and registration id done successfully and for else case we render form 
+
