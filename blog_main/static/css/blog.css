@@ -1,4 +1,7 @@
 /* stylelint-disable selector-list-comma-newline-after */
+body {
+  background-color: rgb(181, 177, 177);
+}
 
 .blog-header {
   border-bottom: 1px solid #e5e5e5;

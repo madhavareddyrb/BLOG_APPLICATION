@@ -420,3 +420,103 @@ load crispy_forms_tags in register template and use like or {{ form | crispy }} 
 
 Now The Form is Loading with action register and when we click on submit the data is going to save in request.POST method so if the request.method == POST we get data we validate the form data and registration id done successfully and for else case we render form 
 
+def register(request):
+  if request.method == "POST":
+    form = RegistrationForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return redirect("register")
+  else:
+    form = RegistrationForm()
+  context = {
+    'form': form,
+  }
+  return render(request, 'register.html', context)
+
+## LOGIN Functionality:
+
+create url path with login name = login
+
+cretae view with login and render login.html
+
+check the connectoin 
+
+and to authenticate user we have built in django  AuthenticationForm from forms and import it and authentication has 2 fileds by defalut (username,password) and register also but we have added email field extra 
+
+and 
+
+def login(request):
+  if request.method == "POST"
+  form = AuthenticationForm(request, request.POST)
+  if form.is_valid():
+  username= form.cleaned_data['username'] ## cleaned_data(dict) post method stores values in dict and is_valid function validates the data and stored in dict.so we use  cleaned_data['username]
+  password = form.cleaned_data['password'] # featching details of user to check and to check or authenticate we have built in model auth.authenticate and import auth from contrib
+  user = auth.authenticate(username=username, password=password)
+  if user is not None:
+    auth.login(request,user)
+  return redirect('home')
+
+  form = AuthenticationForm()
+  context = {
+    'form': form,
+  }
+  return render(request, 'login.html', context)
+
+### LogOut Functionality:
+
+when the useer logged we see that login and register is still visiable. If user is not logged in we can show login and register else case we display logout with user name in base.html chnage the syntext
+
+            <a href="" class="text-dark m-1 ">{{ user }} </a>  ## user comes from context_processors by default
+ 
+create a path for logout 
+
+def logout(request):
+  auth.logout(request)
+  return redirect("home")
+
+### 🔍 Quick Example Flow
+Before logout
+
+user logs in
+
+Django creates session
+
+browser keeps session cookie
+
+After logout
+
+Django deletes session
+
+cookie no longer valid
+
+user becomes Anonymous
+
+
+### AUthentication and Authrization
+
+Authentication:Checks user credentials and give permission to system 
+
+Authrization:What kind of permissions did user have(like admin,staff,editor like that)
+
+create user with staff status(can login to admin page) and check permissions and permissions are generated when we migrate models some default models which are auth,admin and 
+
+Default permissions where created when we cretae models for our project and every model has 4 types of permission(edit,delete,view,create)
+
+Groups: The groups are used to create a set permissions and this group of permissions can be given to users by just selecting grop editor group,manager group.
+
+
+
+### Upgrading Packages:
+
+pip freeze > requirments.txt # creates all packages to file requirements  change == to >=
+
+pip install -r requirments.txt --upgrade # -r recursively 
+
+### Managers and Editors DashBoard 
+
+create an app Dashboards and add app name in installed settings
+
+cretae path for dashboard and include dashboards.urls
+
+create a url in dashboards for empyty path
+
