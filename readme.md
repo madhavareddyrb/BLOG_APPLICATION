@@ -447,19 +447,29 @@ and
 
 def login(request):
   if request.method == "POST"
+  
   form = AuthenticationForm(request, request.POST)
+  
   if form.is_valid():
+  
   username= form.cleaned_data['username'] ## cleaned_data(dict) post method stores values in dict and is_valid function validates the data and stored in dict.so we use  cleaned_data['username]
+  
   password = form.cleaned_data['password'] # featching details of user to check and to check or authenticate we have built in model auth.authenticate and import auth from contrib
+
   user = auth.authenticate(username=username, password=password)
+  
   if user is not None:
+    
     auth.login(request,user)
+  
   return redirect('home')
 
   form = AuthenticationForm()
+  
   context = {
     'form': form,
   }
+  
   return render(request, 'login.html', context)
 
 ### LogOut Functionality:
@@ -518,5 +528,82 @@ create an app Dashboards and add app name in installed settings
 
 cretae path for dashboard and include dashboards.urls
 
-create a url in dashboards for empyty path
+create a url in dashboards for empyty path and create an view for dashboard and render files
+
+in base.html chnage your logged as dashboard
+
+Design a small dashnoard with how mant categories and blogs have in project
+
+create counts of all categories and all blogs 
+
+### LOgin_required
+everyone can access any url as of now with login or without login but we must put a condition that login required for dashboard view and django as some default decorates which help us to make work easy just by import login_required from django decorators
+
+from django.contrib.auth.decorators import login_required
+
+
+@login_required(login_url='login') ## we saying login required and login url if user is not logged in 
+
+when someone login we show the dashboard so change login view to redirect dashboard
+
+
+### SideBar Category Dashboard:
+
+1.Create a url with categories in dashboard app -- path('categories/', views.categories, name='categories),
+
+create view with categories and render categories.html and make chnages according to it
+
+to don't repeat sidebar cretae a sidebar and include that file in remaining -- {% include 'dashboard/sidebar.html' %}
+
+add clickable links and change color for paths - {% if '/dashboard/' == request.path %}bg-warning{% endif %}
+
+### Categories Table
+
+To know who logged in system we display it {{ user }}
+
+add simple bootstrap table and make chnages
+
+### ADd Category:
+
+url-path('categories/add/',views.add_category,name="add_category")
+
+def add_category(request):
+  
+  return render(request, 'dashboard/add_category.html')
+
+
+extends base.httml-- open block --end block
+
+add url to table 
+
+copy category html and heading add new category 
+
+in category.html ccreate an add button with a tag float-right, mb-2 -- add add new category url 
+
+<form action="{% url 'add_category' %}" method="POST" >
+{% csrf_token %}
+<button type="submit" class="btn btn-warning">Submit</button>
+</form>
+
+to load form we are going to use model form
+
+from django import forms
+
+from blogs_app.models import category
+
+class Category(forms.ModelForm):
+  class Meta:
+    model = category
+    field = "__all__"
+
+
+in views 
+
+form = CategoryForm()
+
+context = { 'form': form, }
+
+load in add_category.html and load crispy_forms_tags | crispy
+
+
 

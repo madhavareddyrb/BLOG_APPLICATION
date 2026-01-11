@@ -50,7 +50,7 @@ def login(request):
 
         auth.login(request, user)
         
-      return redirect('home')
+      return redirect('dashboard')
     
   else:
     form = AuthenticationForm()
